@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan - MOCHAMAD RIZKI & AULYA AMDRIYANI</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Phosphor Icons for UI elements -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        blush: {
+                            50: '#fdf8f8',
+                            100: '#f9ebea',
+                            200: '#f3d5d4',
+                            300: '#eab8b6',
+                            400: '#df9491',
+                            500: '#d16d69',
+                            600: '#ba504c',
+                            800: '#813836',
+                        },
+                        sand: '#FAF8F5',
+                        gold: '#C5A880'
+                    },
+                    fontFamily: {
+                        sans: ['Lora', 'serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        script: ['Alex Brush', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<!-- Body starts with hidden overflow to prevent scrolling before opening -->
+<body class="antialiased overflow-hidden selection:bg-blush-200 selection:text-blush-800 relative">
+
+    <!-- Cover / Welcome Screen -->
+    <div id="welcome-screen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-sand transition-transform duration-1000 ease-in-out">
+        <div class="absolute inset-0 z-0">
+            <!-- Background Image for Cover -->
+            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2070&auto=format&fit=crop" alt="Background" class="w-full h-full object-cover opacity-30">
+            <div class="absolute inset-0 bg-gradient-to-b from-sand/50 via-sand/80 to-sand"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-6 flex flex-col items-center max-w-lg mx-auto">
+            <p class="text-sm tracking-[0.2em] uppercase mb-4 text-blush-600 font-semibold">The Wedding Of</p>
+            <h1 class="font-script text-6xl md:text-8xl text-gray-800 mb-6 drop-shadow-sm">Mochamad Rizki & Aulya Andriyan</h1>
+            
+            <div class="mb-8 text-gray-600">
+                <p class="italic mb-2">Kepada Yth. Bapak/Ibu/Saudara/i</p>
+                <p class="font-bold text-lg border-b border-blush-300 pb-1 inline-block px-4">Tamu Undangan</p>
+            </div>
+
+            <button onclick="openInvitation()" class="group relative px-8 py-3 bg-blush-500 text-white rounded-full overflow-hidden shadow-lg shadow-blush-200 transition-all hover:scale-105 hover:shadow-xl">
+                <div class="absolute inset-0 w-full h-full bg-white/20 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                <span class="relative flex items-center gap-2 font-medium">
+                    <i class="ph ph-envelope-open text-xl"></i>
+                    Buka Undangan
+                </span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content wrapper -->
+    <main id="main-content" class="opacity-0 transition-opacity duration-1000">
+        
+        <!-- Hero Section -->
+        <section class="relative min-h-screen flex items-center justify-center pt-20 pb-12 overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=2069&auto=format&fit=crop" alt="Hero Background" class="w-full h-full object-cover opacity-20">
+                <div class="absolute inset-0 bg-gradient-to-t from-sand via-transparent to-sand/40"></div>
+            </div>
+
+            <div class="relative z-10 text-center px-6">
+                <div class="reveal">
+                    <p class="text-blush-600 tracking-widest text-sm font-semibold uppercase mb-4">We Are Getting Married</p>
+                    <h2 class="font-script text-7xl md:text-9xl text-gray-800 mb-4 animate-float">Mochamad Rizki <span class="text-blush-400">&</span> Aulya Andriyani</h2>
+                    <p class="font-serif text-xl md:text-2xl text-gray-600 mt-6 tracking-wide">Sabtu, 10 Oktober 2026</p>
+                </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center animate-bounce opacity-70">
+                <p class="text-xs tracking-widest uppercase mb-2">Scroll</p>
+                <i class="ph ph-arrow-down text-xl"></i>
+            </div>
+        </section>
+
+        <!-- Quote Section -->
+        <section class="py-24 px-6 bg-blush-50 text-center relative">
+            <!-- Decorative leaves top right -->
+            <i class="ph-fill ph-flower-lotus absolute top-8 right-8 text-5xl text-blush-200 opacity-50"></i>
+            
+            <div class="max-w-2xl mx-auto reveal">
+                <i class="ph-fill ph-quotes text-4xl text-gold mb-6 inline-block"></i>
+                <p class="font-serif italic text-lg md:text-xl text-gray-600 leading-relaxed">
+                    "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya diantaramu rasa kasih dan sayang."
+                </p>
+                <p class="mt-4 text-sm font-semibold text-gray-500 uppercase tracking-widest">(QS. Ar-Rum: 21)</p>
+            </div>
+        </section>
+
+        <!-- Couple Section -->
+        <section class="py-24 px-6 relative">
+            <div class="max-w-5xl mx-auto text-center">
+                <div class="reveal mb-16">
+                    <h3 class="font-script text-5xl text-blush-600 mb-2">Mempelai</h3>
+                    <p class="text-gray-500 uppercase tracking-widest text-sm">Berkat rahmat Tuhan Yang Maha Esa</p>
+                </div>
+
+                <div class="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-24">
+                    <!-- Groom -->
+                    <div class="reveal flex flex-col items-center">
+                        <div class="w-48 h-48 md:w-64 md:h-64 rounded-t-full rounded-b-[100px] overflow-hidden border-4 border-white shadow-xl shadow-blush-100 mb-6 relative group">
+                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1287&auto=format&fit=crop" alt="Romeo" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-blush-500/10 group-hover:bg-transparent transition-colors"></div>
+                        </div>
+                        <h4 class="font-serif text-2xl font-bold mb-2">Mochamad Rizki</h4>
+                        <p class="text-gray-500 text-sm mb-4">Putra Pertama dari<br>Bapak Montague & Ibu Lady Montague</p>
+                        <a href="#" class="text-blush-500 hover:text-blush-700 transition-colors"><i class="ph-fill ph-instagram-logo text-2xl"></i></a>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="reveal font-script text-6xl text-gold hidden md:block">&</div>
+
+                    <!-- Bride -->
+                    <div class="reveal delay-200 flex flex-col items-center">
+                        <div class="w-48 h-48 md:w-64 md:h-64 rounded-t-full rounded-b-[100px] overflow-hidden border-4 border-white shadow-xl shadow-blush-100 mb-6 relative group">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1364&auto=format&fit=crop" alt="Juliet" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-blush-500/10 group-hover:bg-transparent transition-colors"></div>
+                        </div>
+                        <h4 class="font-serif text-2xl font-bold mb-2">Aulya Andriyani</h4>
+                        <p class="text-gray-500 text-sm mb-4">Putri Bungsu dari<br>Bapak Capulet & Ibu Lady Capulet</p>
+                        <a href="#" class="text-blush-500 hover:text-blush-700 transition-colors"><i class="ph-fill ph-instagram-logo text-2xl"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Event Details Section -->
+        <section class="py-24 px-6 bg-blush-50 relative overflow-hidden">
+            <!-- Background Decoration -->
+            <div class="absolute -left-20 top-20 w-64 h-64 bg-blush-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse"></div>
+            <div class="absolute -right-20 bottom-20 w-64 h-64 bg-gold rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
+
+            <div class="max-w-4xl mx-auto relative z-10">
+                <div class="reveal text-center mb-16">
+                    <h3 class="font-script text-5xl text-blush-600 mb-2">Detail Acara</h3>
+                    <p class="text-gray-500 uppercase tracking-widest text-sm">Momen Bahagia Kami</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Akad Card -->
+                    <div class="reveal glass rounded-3xl p-8 text-center shadow-lg hover:-translate-y-2 transition-transform duration-300">
+                        <i class="ph-fill ph-book-open-text text-4xl text-gold mb-4 inline-block"></i>
+                        <h4 class="font-serif text-2xl font-bold mb-4 border-b border-gray-200 pb-4">Akad Nikah</h4>
+                        <div class="space-y-4 mb-8">
+                            <p class="flex items-center justify-center gap-2 text-gray-600">
+                                <i class="ph ph-calendar-blank"></i> Sabtu, 10 Oktober 2026
+                            </p>
+                            <p class="flex items-center justify-center gap-2 text-gray-600">
+                                <i class="ph ph-clock"></i> 08.00 WIB - Selesai
+                            </p>
+                            <p class="flex items-center justify-center gap-2 text-gray-600">
+                                <i class="ph ph-map-pin"></i> 
+                                <span><strong>Masjid Al-Ikhlas</strong><br>Jl. Kenangan Indah No. 1, Bandung</span>
+                            </p>
+                        </div>
+                        <a href="https://maps.google.com" target="_blank" class="inline-flex items-center gap-2 px-6 py-2 border border-blush-400 text-blush-600 rounded-full hover:bg-blush-400 hover:text-white transition-colors">
+                            <i class="ph ph-map-trifold"></i> Lihat Lokasi
+                        </a>
+                    </div>
+
+                    <!-- Resepsi Card -->
+                    <div class="reveal delay-200 glass rounded-3xl p-8 text-center shadow-lg hover:-translate-y-2 transition-transform duration-300">
+                        <i class="ph-fill ph-wine text-4xl text-gold mb-4 inline-block"></i>
+                        <h4 class="font-serif text-2xl font-bold mb-4 border-b border-gray-200 pb-4">Resepsi</h4>
+                        <div class="space-y-4 mb-8">
+                            <p class="flex items-center justify-center gap-2 text-gray-600">
+                                <i class="ph ph-calendar-blank"></i> Sabtu, 10 Oktober 2026
+                            </p>
+                            <p class="flex items-center justify-center gap-2 text-gray-600">
+                                <i class="ph ph-clock"></i> 11.00 WIB - 14.00 WIB
+                            </p>
+                            <p class="flex items-center justify-center gap-2 text-gray-600">
+                                <i class="ph ph-map-pin"></i> 
+                                <span><strong>Grand Ballroom Hotel</strong><br>Jl. Sudirman No. 123, Bandung</span>
+                            </p>
+                        </div>
+                        <a href="https://maps.google.com" target="_blank" class="inline-flex items-center gap-2 px-6 py-2 border border-blush-400 text-blush-600 rounded-full hover:bg-blush-400 hover:text-white transition-colors">
+                            <i class="ph ph-map-trifold"></i> Lihat Lokasi
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Countdown Section -->
+        <section class="py-20 px-6 relative bg-gray-800 text-white text-center overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=2070&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-20" alt="Countdown background">
+            
+            <div class="relative z-10 max-w-3xl mx-auto reveal">
+                <h3 class="font-serif text-3xl md:text-4xl mb-8">Menuju Hari Bahagia</h3>
+                
+                <div class="flex justify-center gap-4 md:gap-8">
+                    <div class="glass !bg-white/10 !border-white/20 p-3 md:p-6 rounded-2xl min-w-[70px] md:min-w-[100px]">
+                        <span id="days" class="block font-serif text-3xl md:text-5xl font-bold text-blush-200">00</span>
+                        <span class="text-xs md:text-sm uppercase tracking-wider mt-2 block">Hari</span>
+                    </div>
+                    <div class="glass !bg-white/10 !border-white/20 p-3 md:p-6 rounded-2xl min-w-[70px] md:min-w-[100px]">
+                        <span id="hours" class="block font-serif text-3xl md:text-5xl font-bold text-blush-200">00</span>
+                        <span class="text-xs md:text-sm uppercase tracking-wider mt-2 block">Jam</span>
+                    </div>
+                    <div class="glass !bg-white/10 !border-white/20 p-3 md:p-6 rounded-2xl min-w-[70px] md:min-w-[100px]">
+                        <span id="minutes" class="block font-serif text-3xl md:text-5xl font-bold text-blush-200">00</span>
+                        <span class="text-xs md:text-sm uppercase tracking-wider mt-2 block">Menit</span>
+                    </div>
+                    <div class="glass !bg-white/10 !border-white/20 p-3 md:p-6 rounded-2xl min-w-[70px] md:min-w-[100px]">
+                        <span id="seconds" class="block font-serif text-3xl md:text-5xl font-bold text-blush-200">00</span>
+                        <span class="text-xs md:text-sm uppercase tracking-wider mt-2 block">Detik</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section class="py-24 px-6 relative">
+            <div class="max-w-6xl mx-auto text-center">
+                <div class="reveal mb-12">
+                    <h3 class="font-script text-5xl text-blush-600 mb-2">Galeri Momen</h3>
+                    <p class="text-gray-500 uppercase tracking-widest text-sm">Kisah Cinta Kami</p>
+                </div>
+
+                <!-- CSS Grid Masonry style layout -->
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="reveal col-span-2 md:col-span-1 md:row-span-2 rounded-2xl overflow-hidden shadow-md">
+                        <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=2070&auto=format&fit=crop" alt="Gallery 1" class="w-full h-full object-cover aspect-square md:aspect-auto hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="reveal delay-100 rounded-2xl overflow-hidden shadow-md">
+                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop" alt="Gallery 2" class="w-full h-full object-cover aspect-square hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="reveal delay-200 rounded-2xl overflow-hidden shadow-md">
+                        <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=2070&auto=format&fit=crop" alt="Gallery 3" class="w-full h-full object-cover aspect-square hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="reveal delay-100 col-span-2 md:col-span-2 rounded-2xl overflow-hidden shadow-md">
+                        <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=2070&auto=format&fit=crop" alt="Gallery 4" class="w-full h-full object-cover h-48 md:h-64 hover:scale-105 transition-transform duration-500">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP & Wishes Section -->
+        <section class="py-24 px-6 bg-blush-50 relative">
+            <div class="max-w-4xl mx-auto">
+                <div class="reveal text-center mb-12">
+                    <h3 class="font-script text-5xl text-blush-600 mb-2">Kehadiran & Ucapan</h3>
+                    <p class="text-gray-500 uppercase tracking-widest text-sm">Doa restu Anda adalah kebahagiaan kami</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 bg-white rounded-3xl p-8 shadow-xl">
+                    
+                    <!-- Form RSVP -->
+                    <div class="reveal">
+                        <h4 class="font-serif text-xl font-bold mb-6 border-b pb-2">Konfirmasi Kehadiran</h4>
+                        <form id="rsvp-form" onsubmit="submitRSVP(event)" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+                                <input type="text" required class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blush-400 focus:border-blush-400 outline-none transition-all" placeholder="Tulis nama Anda">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Kehadiran</label>
+                                <select required class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blush-400 focus:border-blush-400 outline-none transition-all bg-white">
+                                    <option value="" disabled selected>Pilih status kehadiran</option>
+                                    <option value="hadir">Ya, Saya akan hadir</option>
+                                    <option value="tidak">Maaf, tidak bisa hadir</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Jumlah Tamu</label>
+                                <select required class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blush-400 focus:border-blush-400 outline-none transition-all bg-white">
+                                    <option value="1">1 Orang</option>
+                                    <option value="2">2 Orang</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Pesan / Doa</label>
+                                <textarea rows="3" required class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blush-400 focus:border-blush-400 outline-none transition-all resize-none" placeholder="Tulis doa untuk mempelai"></textarea>
+                            </div>
+                            <button type="submit" class="w-full py-3 bg-blush-500 text-white rounded-xl hover:bg-blush-600 transition-colors font-medium shadow-md shadow-blush-200">Kirim Konfirmasi</button>
+                        </form>
+                    </div>
+
+                    <!-- Wishes List -->
+                    <div class="reveal delay-200">
+                        <h4 class="font-serif text-xl font-bold mb-6 border-b pb-2">Daftar Ucapan</h4>
+                        <div class="h-[400px] overflow-y-auto pr-2 space-y-4" id="wishes-container">
+                            <!-- Dummy Wishes -->
+                            <div class="bg-sand p-4 rounded-xl border border-gray-100">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <div class="w-8 h-8 rounded-full bg-blush-200 flex items-center justify-center text-blush-800 font-bold text-xs">AB</div>
+                                    <div>
+                                        <h5 class="font-bold text-sm">Andi & Budi</h5>
+                                        <span class="text-xs text-gray-400 flex items-center gap-1"><i class="ph-fill ph-check-circle text-green-500"></i> Hadir</span>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-gray-600">Selamat menempuh hidup baru Romeo & Juliet! Semoga langgeng sampai kakek nenek.</p>
+                            </div>
+                            
+                            <div class="bg-sand p-4 rounded-xl border border-gray-100">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <div class="w-8 h-8 rounded-full bg-blush-200 flex items-center justify-center text-blush-800 font-bold text-xs">S</div>
+                                    <div>
+                                        <h5 class="font-bold text-sm">Siska</h5>
+                                        <span class="text-xs text-gray-400 flex items-center gap-1"><i class="ph-fill ph-x-circle text-red-500"></i> Tidak Hadir</span>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-gray-600">Maaf belum bisa hadir, doa terbaik untuk kalian berdua ya. Happy Wedding!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-8 bg-gray-900 text-gray-400 text-center">
+            <h2 class="font-script text-3xl text-white mb-2">Romeo & Juliet</h2>
+            <p class="text-sm">Made with love</p>
+        </footer>
+
+    </main>
+
+    <!-- Floating Music Button -->
+    <button id="music-btn" onclick="toggleMusic()" class="hidden fixed bottom-6 right-6 z-50 w-12 h-12 bg-white rounded-full shadow-xl items-center justify-center text-blush-500 border border-blush-100 hover:scale-110 transition-transform">
+        <i id="music-icon" class="ph-fill ph-speaker-high text-2xl animate-pulse"></i>
+        <!-- Hidden Audio Element (using a generic royalty-free placeholder URL for demo) -->
+        <audio id="bg-music" loop>
+            <source src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=romantic-piano-110025.mp3" type="audio/mpeg">
+        </audio>
+    </button>
+
+    <!-- Modal Notification (Replacing Alert) -->
+    <div id="notification-modal" class="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 opacity-0 pointer-events-none transition-opacity duration-300 px-4">
+        <div class="bg-white p-6 rounded-2xl shadow-2xl max-w-sm w-full text-center transform scale-90 transition-transform duration-300" id="notification-content">
+            <i class="ph-fill ph-check-circle text-5xl text-green-500 mb-4"></i>
+            <h3 class="font-serif text-xl font-bold mb-2">Terima Kasih!</h3>
+            <p class="text-gray-600 mb-6 text-sm">Konfirmasi kehadiran dan doa Anda telah terkirim.</p>
+            <button onclick="closeNotification()" class="px-6 py-2 bg-blush-500 text-white rounded-xl hover:bg-blush-600 transition-colors">Tutup</button>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
