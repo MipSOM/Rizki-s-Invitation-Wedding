@@ -1,75 +1,87 @@
 // --- 1. Opening Invitation Logic ---
 const MUSIC_VOLUME = 0.5;
-const MUSIC_FADE_DURATION = 1200;
 let musicShouldPlay = false;
-let musicFadeFrame;
 let musicPlayRequest = 0;
-
-function fadeMusicTo(audio, targetVolume) {
-    cancelAnimationFrame(musicFadeFrame);
-
-    const startVolume = audio.volume;
-    const startTime = performance.now();
-
-    function step(currentTime) {
-        const progress = Math.min((currentTime - startTime) / MUSIC_FADE_DURATION, 1);
-        audio.volume = startVolume + (targetVolume - startVolume) * progress;
-
-        if (progress < 1) {
-            musicFadeFrame = requestAnimationFrame(step);
-        } else if (targetVolume === 0 && !musicShouldPlay) {
-            audio.pause();
-        }
-    }
-
-    musicFadeFrame = requestAnimationFrame(step);
-}
 
 function playMusic() {
     const audio = document.getElementById('bg-music');
     const request = ++musicPlayRequest;
     musicShouldPlay = true;
+    audio.volume = MUSIC_VOLUME;
+    updateMusicButtonLoading(true);
 
-    audio.play()
-        .then(() => {
-            if (request !== musicPlayRequest) {
-                if (!musicShouldPlay) {
-                    audio.pause();
-                }
-                return;
-            }
-
-            if (musicShouldPlay) {
-                fadeMusicTo(audio, MUSIC_VOLUME);
-            } else {
-                audio.pause();
-            }
-        })
-        .catch(error => {
-            if (request === musicPlayRequest && musicShouldPlay) {
-                musicShouldPlay = false;
-                updateMusicButton(false);
-            }
-            console.error("Music playback failed:", error);
-        });
+    audio.play().then(() => {
+        if (request === musicPlayRequest && musicShouldPlay) {
+            updateMusicButton(true);
+        } else {
+            audio.pause();
+        }
+    }).catch(error => {
+        if (request === musicPlayRequest) {
+            musicShouldPlay = false;
+            updateMusicButton(false);
+        }
+        console.error("Music playback failed:", error);
+    });
 }
 
 function pauseMusic() {
     const audio = document.getElementById('bg-music');
     musicShouldPlay = false;
     musicPlayRequest++;
+    audio.pause();
     updateMusicButton(false);
-    fadeMusicTo(audio, 0);
 }
-
-document.getElementById('bg-music').volume = 0;
 
 function updateMusicButton(isPlaying) {
     const icon = document.getElementById('music-icon');
+    const musicBtn = document.getElementById('music-btn');
+    // clear loading state if any
+    updateMusicButtonLoading(false);
+
     icon.classList.toggle('ph-speaker-high', isPlaying);
     icon.classList.toggle('animate-pulse', isPlaying);
     icon.classList.toggle('ph-speaker-x', !isPlaying);
+    musicBtn.setAttribute('aria-pressed', isPlaying ? 'true' : 'false');
 }
+
+function updateMusicButtonLoading(isLoading) {
+    const icon = document.getElementById('music-icon');
+    const musicBtn = document.getElementById('music-btn');
+    if (!icon || !musicBtn) return;
+
+    if (isLoading) {
+        // show spinner icon and subtle opacity to indicate loading
+        icon.classList.remove('ph-speaker-high', 'ph-speaker-x', 'animate-pulse');
+        icon.classList.add('ph-spinner', 'animate-spin');
+        musicBtn.classList.add('opacity-80');
+        musicBtn.setAttribute('aria-busy', 'true');
+    } else {
+        icon.classList.remove('ph-spinner', 'animate-spin');
+        musicBtn.classList.remove('opacity-80');
+        musicBtn.removeAttribute('aria-busy');
+    }
+
+}
+
+const backgroundMusic = document.getElementById('bg-music');
+backgroundMusic.addEventListener('playing', () => {
+    if (musicShouldPlay) {
+        updateMusicButton(true);
+    }
+});
+backgroundMusic.addEventListener('waiting', () => {
+    if (musicShouldPlay) {
+        updateMusicButtonLoading(true);
+    }
+});
+backgroundMusic.addEventListener('error', () => {
+    if (musicShouldPlay) {
+        musicShouldPlay = false;
+        updateMusicButton(false);
+    }
+    console.error("Background music failed to load:", backgroundMusic.error);
+});
 
 function openInvitation() {
 // Slide up cover
