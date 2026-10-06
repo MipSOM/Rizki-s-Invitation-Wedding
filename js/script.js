@@ -1,4 +1,76 @@
 // --- 1. Opening Invitation Logic ---
+const MUSIC_VOLUME = 0.5;
+const MUSIC_FADE_DURATION = 1200;
+let musicShouldPlay = false;
+let musicFadeFrame;
+let musicPlayRequest = 0;
+
+function fadeMusicTo(audio, targetVolume) {
+    cancelAnimationFrame(musicFadeFrame);
+
+    const startVolume = audio.volume;
+    const startTime = performance.now();
+
+    function step(currentTime) {
+        const progress = Math.min((currentTime - startTime) / MUSIC_FADE_DURATION, 1);
+        audio.volume = startVolume + (targetVolume - startVolume) * progress;
+
+        if (progress < 1) {
+            musicFadeFrame = requestAnimationFrame(step);
+        } else if (targetVolume === 0 && !musicShouldPlay) {
+            audio.pause();
+        }
+    }
+
+    musicFadeFrame = requestAnimationFrame(step);
+}
+
+function playMusic() {
+    const audio = document.getElementById('bg-music');
+    const request = ++musicPlayRequest;
+    musicShouldPlay = true;
+
+    audio.play()
+        .then(() => {
+            if (request !== musicPlayRequest) {
+                if (!musicShouldPlay) {
+                    audio.pause();
+                }
+                return;
+            }
+
+            if (musicShouldPlay) {
+                fadeMusicTo(audio, MUSIC_VOLUME);
+            } else {
+                audio.pause();
+            }
+        })
+        .catch(error => {
+            if (request === musicPlayRequest && musicShouldPlay) {
+                musicShouldPlay = false;
+                updateMusicButton(false);
+            }
+            console.error("Music playback failed:", error);
+        });
+}
+
+function pauseMusic() {
+    const audio = document.getElementById('bg-music');
+    musicShouldPlay = false;
+    musicPlayRequest++;
+    updateMusicButton(false);
+    fadeMusicTo(audio, 0);
+}
+
+document.getElementById('bg-music').volume = 0;
+
+function updateMusicButton(isPlaying) {
+    const icon = document.getElementById('music-icon');
+    icon.classList.toggle('ph-speaker-high', isPlaying);
+    icon.classList.toggle('animate-pulse', isPlaying);
+    icon.classList.toggle('ph-speaker-x', !isPlaying);
+}
+
 function openInvitation() {
 // Slide up cover
 const cover = document.getElementById('welcome-screen');
@@ -16,23 +88,15 @@ const musicBtn = document.getElementById('music-btn');
 musicBtn.classList.remove('hidden');
 musicBtn.classList.add('flex');
 
-const audio = document.getElementById('bg-music');
-audio.play().catch(e => console.log("Audio play prevented by browser policy"));
+playMusic();
 }
 
 // --- 2. Music Toggle Logic ---
 function toggleMusic() {
-const audio = document.getElementById('bg-music');
-const icon = document.getElementById('music-icon');
-
-if (audio.paused) {
-    audio.play();
-    icon.classList.remove('ph-speaker-x');
-    icon.classList.add('ph-speaker-high', 'animate-pulse');
+if (!musicShouldPlay) {
+    playMusic();
 } else {
-    audio.pause();
-    icon.classList.remove('ph-speaker-high', 'animate-pulse');
-    icon.classList.add('ph-speaker-x');
+    pauseMusic();
 }
 }
 
@@ -82,29 +146,3 @@ if (distance < 0) {
     document.getElementById("seconds").innerHTML = "00";
 }
 }, 1000);
-
-// --- 5. RSVP Form Logic (No Alert) ---
-function submitRSVP(e) {
-e.preventDefault();
-// In a real app, here you would send data to a backend via fetch()
-
-// Show custom notification modal
-const modal = document.getElementById('notification-modal');
-const content = document.getElementById('notification-content');
-
-modal.classList.remove('opacity-0', 'pointer-events-none');
-content.classList.remove('scale-90');
-content.classList.add('scale-100');
-
-// Reset form
-document.getElementById('rsvp-form').reset();
-}
-
-function closeNotification() {
-const modal = document.getElementById('notification-modal');
-const content = document.getElementById('notification-content');
-
-content.classList.remove('scale-100');
-content.classList.add('scale-90');
-modal.classList.add('opacity-0', 'pointer-events-none');
-}
